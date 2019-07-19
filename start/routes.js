@@ -16,6 +16,5 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.get('/', () => {
-  return { greeting: 'CriptoSale' }
-})
+Route.post('/users', 'UserController.create')
+Route.post('/sessions', 'SessionController.create')
