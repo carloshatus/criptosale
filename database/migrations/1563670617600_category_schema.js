@@ -9,7 +9,7 @@ class CategorySchema extends Schema {
       table.increments()
       table.string('name', 254).notNullable()
       table.string('description', 254).notNullable()
-      table.integer('category_parent_id')
+      table.integer('parent_id')
         .unsigned()
         .references('id')
         .inTable('categories')
