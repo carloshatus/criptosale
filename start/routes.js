@@ -23,3 +23,7 @@ Route.post('/users', 'UserController.store')
 Route.resource('users', 'UserController')
   .only(['index', 'show'])
   .middleware(['auth'])
+
+Route.resource('categories', 'CategoryController')
+  .apiOnly()
+  .middleware(['auth'])

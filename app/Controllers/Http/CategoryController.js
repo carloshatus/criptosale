@@ -1,5 +1,7 @@
 'use strict'
 
+const Category = use('App/Models/Category')
+
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -18,6 +20,16 @@ class CategoryController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+    const {name, parent_id} = request.all()
+    const categories = Category.query()
+      .with('children')
+    if (name) {
+      categories.where('name', 'ilike', '%' + name + '%')
+    }
+    if (parent_id) {
+      categories.where('name', parent_id)
+    }
+    return categories.fetch()
   }
 
   /**
@@ -41,6 +53,9 @@ class CategoryController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+    const data = request.only(['name', 'description', 'parent_id'])
+    const category = await Category.create(data)
+    return category
   }
 
   /**
